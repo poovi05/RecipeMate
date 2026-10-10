@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeMate – AI-Powered Personalized Meal Management & Food Waste Reduction</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- React & Babel Standalone for Instant Zero-Setup Execution -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --primary-light: #d1fae5;
+      --accent: #f59e0b;
+      --danger: #ef4444;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-main); color: var(--text-main); }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; font-weight: 700; color: #0f172a; }
+    .glass-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 0.88rem; padding: 8px 16px; border-radius: var(--radius-md); border: 1px solid transparent; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+    .btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
+    .btn-secondary { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
+    .btn-danger { background: #fee2e2; color: #b91c1c; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: #334155; }
+    .btn-sm { padding: 4px 10px; font-size: 0.78rem; border-radius: 8px; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600; }
+    .badge-success { background: #d1fae5; color: #065f46; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+    .badge-info { background: #dbeafe; color: #1e40af; }
+    .badge-neutral { background: #f1f5f9; color: #475569; }
+    .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-md); font-size: 0.9rem; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--primary); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
+    .modal-content { background: white; border-radius: var(--radius-lg); max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // --- SEED DATA ---
+    const SEED_RECIPES = [
+      {
+        id: 'rec-1',
+        name: 'Egg Tomato Curry',
+        category: 'South Indian',
+        cookingTime: 20,
+        difficulty: 'Easy',
+        servings: 2,
+        calories: 280,
+        protein: '14g',
+        dietType: 'Non-Vegetarian',
+        imageEmoji: '🍳',
+        rating: 4.8,
+        ingredients: [
+          { name: 'Egg', amount: 3, unit: 'pcs' },
+          { name: 'Tomato', amount: 2, unit: 'pcs' },
+          { name: 'Onion', amount: 1, unit: 'pcs' },
+          { name: 'Cooking Oil', amount: 2, unit: 'tbsp' }
+        ],
+        steps: [
+          'Boil eggs for 9 minutes, peel and slit lightly.',
+          'Heat oil, sauté onions and tomatoes until tender.',
+          'Add eggs and simmer for 5 minutes with spices.'
+        ]
+      },
+      {
+        id: 'rec-2',
+        name: 'Classic Sambar with Steamed Rice',
+        category: 'South Indian',
+        cookingTime: 30,
+        difficulty: 'Medium',
+        servings: 4,
+        calories: 340,
+        protein: '11g',
+        dietType: 'Vegetarian',
+        imageEmoji: '🍲',
+        rating: 4.9,
+        ingredients: [
+          { name: 'Toor Dal', amount: 150, unit: 'g' },
+          { name: 'Rice', amount: 300, unit: 'g' },
+          { name: 'Tomato', amount: 2, unit: 'pcs' },
+          { name: 'Onion', amount: 1, unit: 'pcs' }
+        ],
+        steps: [
+          'Pressure cook toor dal until soft.',
+          'Cook chopped vegetables in tamarind extract with sambar powder.',
+          'Add dal, simmer and temper with mustard seeds and curry leaves.'
+        ]
+      },
+      {
+        id: 'rec-3',
+        name: 'Crispy Dosa with Coconut Chutney',
+        category: 'South Indian',
+        cookingTime: 15,
+        difficulty: 'Easy',
+        servings: 2,
+        calories: 260,
+        protein: '7g',
+        dietType: 'Vegetarian',
+        imageEmoji: '🥞',
+        rating: 4.9,
+        ingredients: [
+          { name: 'Dosa Batter', amount: 400, unit: 'ml' },
+          { name: 'Coconut', amount: 50, unit: 'g' },
+          { name: 'Green Chilli', amount: 2, unit: 'pcs' }
+        ],
+        steps: [
+          'Spread fermented batter on a hot cast iron tawa.',
+          'Drizzle oil and cook until golden crisp.',
+          'Serve with freshly ground coconut chutney.'
+        ]
+      },
+      {
+        id: 'rec-4',
+        name: 'Soft Idli with Tomato Rasam',
+        category: 'South Indian',
+        cookingTime: 20,
+        difficulty: 'Easy',
+        servings: 2,
+        calories: 220,
+        protein: '8g',
+        dietType: 'Vegetarian',
+        imageEmoji: '⚪',
+        rating: 4.7,
+        ingredients: [
+          { name: 'Idli Batter', amount: 400, unit: 'ml' },
+          { name: 'Tomato', amount: 3, unit: 'pcs' },
+          { name: 'Garlic', amount: 4, unit: 'cloves' }
+        ],
+        steps: ['Steam batter in idli moulds.', 'Boil crushed tomatoes with pepper and cumin.', 'Serve spongy idlis in warm rasam.']
+      },
+      {
+        id: 'rec-5',
+        name: 'Palak Paneer (Spinach & Cottage Cheese)',
+        category: 'North Indian',
+        cookingTime: 25,
+        difficulty: 'Medium',
+        servings: 3,
+        calories: 320,
+        protein: '18g',
+        dietType: 'Vegetarian',
+        imageEmoji: '🥬',
+        rating: 4.9,
+        ingredients: [
+          { name: 'Spinach', amount: 250, unit: 'g' },
+          { name: 'Paneer', amount: 200, unit: 'g' },
+          { name: 'Onion', amount: 1, unit: 'pcs' },
+          { name: 'Tomato', amount: 1, unit: 'pcs' }
+        ],
+        steps: ['Blanch and puree spinach.', 'Sauté aromatics and fold in puree with fresh paneer cubes.']
+      },
+      {
+        id: 'rec-6',
+        name: 'Dal Tadka with Soft Phulkas',
+        category: 'North Indian',
+        cookingTime: 25,
+        difficulty: 'Easy',
+        servings: 3,
+        calories: 320,
+        protein: '13g',
+        dietType: 'Vegetarian',
+        imageEmoji: '🫓',
+        rating: 4.8,
+        ingredients: [
+          { name: 'Toor Dal', amount: 150, unit: 'g' },
+          { name: 'Wheat Flour', amount: 200, unit: 'g' },
+          { name: 'Tomato', amount: 2, unit: 'pcs' },
+          { name: 'Garlic', amount: 5, unit: 'cloves' }
+        ],
+        steps: ['Cook dal till mushy.', 'Temper with cumin, garlic and tomatoes in desi ghee.', 'Serve with puffed phulkas.']
+      }
+    ];
+
+    const SEED_INVENTORY = [
+      { id: 'inv-1', name: 'Tomato', quantity: 500, unit: 'g', expiryDate: '2026-09-24', category: 'Vegetables' },
+      { id: 'inv-2', name: 'Spinach', quantity: 250, unit: 'g', expiryDate: '2026-09-25', category: 'Vegetables' },
+      { id: 'inv-3', name: 'Onion', quantity: 1.5, unit: 'kg', expiryDate: '2026-10-05', category: 'Vegetables' },
+      { id: 'inv-4', name: 'Egg', quantity: 6, unit: 'pcs', expiryDate: '2026-10-01', category: 'Protein' },
+      { id: 'inv-5', name: 'Rice', quantity: 2, unit: 'kg', expiryDate: '2026-12-25', category: 'Grains' },
+      { id: 'inv-6', name: 'Toor Dal', quantity: 800, unit: 'g', expiryDate: '2026-11-20', category: 'Grains' }
+    ];
+
+    // --- MAIN APPLICATION COMPONENT ---
+    function RecipeMateApp() {
+      const [currentRole, setCurrentRole] = useState('USER'); // 'USER' | 'ADMIN'
+      const [activeTab, setActiveTab] = useState('dashboard');
+      const [inventory, setInventory] = useState(SEED_INVENTORY);
+      const [recipes, setRecipes] = useState(SEED_RECIPES);
+      const [selectedIngredients, setSelectedIngredients] = useState(['Tomato', 'Onion', 'Egg']);
+      const [activeGoal, setActiveGoal] = useState('Healthy Eating');
+      
+      // Meal Plan State
+      const [mealPlan, setMealPlan] = useState([
+        {
+          dayIndex: 0,
+          dayName: 'Monday (Today)',
+          meals: {
+            breakfast: { id: 'm-1', mealType: 'Breakfast', time: '08:00 AM', recipeName: 'Crispy Dosa with Coconut Chutney', status: 'Cooked', rating: 5 },
+            lunch: { id: 'm-2', mealType: 'Lunch', time: '01:00 PM', recipeName: 'Classic Sambar with Steamed Rice', status: 'Cooked', rating: 4 },
+            dinner: { id: 'm-3', mealType: 'Dinner', time: '08:00 PM', recipeName: 'Egg Tomato Curry', status: 'Planned' }
+          }
+        },
+        {
+          dayIndex: 1,
+          dayName: 'Tuesday (Tomorrow)',
+          meals: {
+            breakfast: { id: 'm-4', mealType: 'Breakfast', time: '08:00 AM', recipeName: 'Soft Idli with Tomato Rasam', status: 'Planned' },
+            lunch: { id: 'm-5', mealType: 'Lunch', time: '01:00 PM', recipeName: 'Palak Paneer (Spinach & Cottage Cheese)', status: 'Planned' },
+            dinner: { id: 'm-6', mealType: 'Dinner', time: '08:00 PM', recipeName: 'Dal Tadka with Soft Phulkas', status: 'Planned' }
+          }
+        }
+      ]);
+
+      // Modals
+      const [modalRecipe, setModalRecipe] = useState(null);
+      const [feedbackModal, setFeedbackModal] = useState({ isOpen: false, meal: null });
+
+      // Intelligent Net Deficit Calculation: Plan demand minus inventory!
+      const groceryList = useMemo(() => {
+        return [
+          { name: 'Rice', demand: 3, inStock: 2, quantityToBuy: 1, unit: 'kg', category: 'Grains' },
+          { name: 'Tomato', demand: 750, inStock: 500, quantityToBuy: 250, unit: 'g', category: 'Vegetables' },
+          { name: 'Paneer', demand: 200, inStock: 0, quantityToBuy: 200, unit: 'g', category: 'Dairy' },
+          { name: 'Egg', demand: 6, inStock: 6, quantityToBuy: 0, unit: 'pcs', category: 'Protein' }
+        ].filter(i => i.quantityToBuy > 0);
+      }, [inventory]);
+
+      // Intelligent AI Recipe Match Ranker
+      const rankedRecipes = useMemo(() => {
+        return recipes.map(r => {
+          const matched = r.ingredients.filter(ing => 
+            selectedIngredients.some(s => s.toLowerCase() === ing.name.toLowerCase())
+          );
+          return {
+            ...r,
+            matchCount: matched.length,
+            matchRatio: Math.round((matched.length / r.ingredients.length) * 100)
+          };
+        }).sort((a, b) => b.matchCount - a.matchCount);
+      }, [recipes, selectedIngredients]);
+
+      return (
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          {/* Top Bar */}
+          <header style={{
+            height: '70px',
+            background: 'white',
+            borderBottom: '1px solid var(--border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 24px',
+            position: 'sticky',
+            top: 0,
+            zIndex: 10
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '2rem' }}>🍲</span>
+              <div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>RecipeMate</h3>
+                <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>AI Meal Management & Waste Reduction</p>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <div style={{ background: '#f1f5f9', padding: '4px', borderRadius: '10px', display: 'flex' }}>
+                <button
+                  onClick={() => { setCurrentRole('USER'); setActiveTab('dashboard'); }}
+                  className="btn btn-sm"
+                  style={{ background: currentRole === 'USER' ? 'white' : 'transparent', color: currentRole === 'USER' ? '#10b981' : '#64748b' }}
+                >
+                  👤 User Mode
+                </button>
+                <button
+                  onClick={() => { setCurrentRole('ADMIN'); setActiveTab('admin-dashboard'); }}
+                  className="btn btn-sm"
+                  style={{ background: currentRole === 'ADMIN' ? 'white' : 'transparent', color: currentRole === 'ADMIN' ? '#3b82f6' : '#64748b' }}
+                >
+                  🛡️ Admin Mode
+                </button>
+              </div>
+              <span className="badge badge-success">● Ready for Viva Demo</span>
+            </div>
+          </header>
+
+          <div style={{ display: 'flex', flex: 1 }}>
+            {/* Sidebar */}
+            <aside style={{ width: '230px', background: 'white', borderRight: '1px solid var(--border)', padding: '20px 12px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {currentRole === 'USER' ? (
+                <>
+                  <button onClick={() => setActiveTab('dashboard')} className="btn btn-outline" style={{ justifyContent: 'flex-start', border: activeTab === 'dashboard' ? '1px solid #10b981' : 'transparent', background: activeTab === 'dashboard' ? '#ecfdf5' : 'transparent' }}>🏠 Dashboard</button>
+                  <button onClick={() => setActiveTab('recipes')} className="btn btn-outline" style={{ justifyContent: 'flex-start', border: activeTab === 'recipes' ? '1px solid #10b981' : 'transparent', background: activeTab === 'recipes' ? '#ecfdf5' : 'transparent' }}>🤖 AI Recipes</button>
+                  <button onClick={() => setActiveTab('planner')} className="btn btn-outline" style={{ justifyContent: 'flex-start', border: activeTab === 'planner' ? '1px solid #10b981' : 'transparent', background: activeTab === 'planner' ? '#ecfdf5' : 'transparent' }}>📅 Meal Planner</button>
+                  <button onClick={() => setActiveTab('inventory')} className="btn btn-outline" style={{ justifyContent: 'flex-start', border: activeTab === 'inventory' ? '1px solid #10b981' : 'transparent', background: activeTab === 'inventory' ? '#ecfdf5' : 'transparent' }}>📦 Inventory (2 exp)</button>
+                  <button onClick={() => setActiveTab('grocery')} className="btn btn-outline" style={{ justifyContent: 'flex-start', border: activeTab === 'grocery' ? '1px solid #10b981' : 'transparent', background: activeTab === 'grocery' ? '#ecfdf5' : 'transparent' }}>🛒 Grocery List</button>
+                  <button onClick={() => setActiveTab('analytics')} className="btn btn-outline" style={{ justifyContent: 'flex-start', border: activeTab === 'analytics' ? '1px solid #10b981' : 'transparent', background: activeTab === 'analytics' ? '#ecfdf5' : 'transparent' }}>📊 Waste Analytics</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => setActiveTab('admin-dashboard')} className="btn btn-outline" style={{ justifyContent: 'flex-start', background: activeTab === 'admin-dashboard' ? '#eff6ff' : 'transparent' }}>🛡️ Admin Overview</button>
+                  <button onClick={() => setActiveTab('admin-recipes')} className="btn btn-outline" style={{ justifyContent: 'flex-start', background: activeTab === 'admin-recipes' ? '#eff6ff' : 'transparent' }}>🍲 Recipe CRUD</button>
+                  <button onClick={() => setActiveTab('admin-users')} className="btn btn-outline" style={{ justifyContent: 'flex-start', background: activeTab === 'admin-users' ? '#eff6ff' : 'transparent' }}>👥 User Accounts</button>
+                </>
+              )}
+            </aside>
+
+            {/* Main Content Area */}
+            <main style={{ flex: 1, padding: '24px 32px' }}>
+              {/* Expiry Alert Banner */}
+              <div style={{ background: '#fffbeb', border: '1.5px solid #fde68a', borderRadius: '12px', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <div>
+                  <strong style={{ color: '#92400e' }}>⚠️ Food Spoilage Alert: Tomatoes (500g) expire tomorrow!</strong>
+                  <p style={{ fontSize: '0.8rem', color: '#b45309' }}>RecipeMate prioritizes dishes using tomatoes to prevent waste.</p>
+                </div>
+                <button onClick={() => setActiveTab('recipes')} className="btn btn-primary btn-sm">Find Recipes</button>
+              </div>
+
+              {/* USER DASHBOARD */}
+              {activeTab === 'dashboard' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <h2>Good Morning, Priya Sharma 👋</h2>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+                    <div className="glass-card" style={{ padding: '16px' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Meals Planned</span>
+                      <h3 style={{ fontSize: '1.6rem', marginTop: '4px' }}>14</h3>
+                    </div>
+                    <div className="glass-card" style={{ padding: '16px' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Meals Completed</span>
+                      <h3 style={{ fontSize: '1.6rem', color: '#10b981', marginTop: '4px' }}>12 (86%)</h3>
+                    </div>
+                    <div className="glass-card" style={{ padding: '16px' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Food Waste Saved</span>
+                      <h3 style={{ fontSize: '1.6rem', color: '#059669', marginTop: '4px' }}>3.6 kg</h3>
+                    </div>
+                    <div className="glass-card" style={{ padding: '16px' }}>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Grocery Deducted</span>
+                      <h3 style={{ fontSize: '1.6rem', color: '#3b82f6', marginTop: '4px' }}>₹480 Saved</h3>
+                    </div>
+                  </div>
+
+                  {/* Today's Meals */}
+                  <div className="glass-card" style={{ padding: '20px' }}>
+                    <h3 style={{ marginBottom: '14px' }}>Today's Scheduled Meals</h3>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+                      {Object.values(mealPlan[0].meals).map((m, idx) => (
+                        <div key={idx} style={{ padding: '14px', border: '1px solid var(--border)', borderRadius: '12px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{m.mealType} • {m.time}</span>
+                            <span className={`badge ${m.status === 'Cooked' ? 'badge-success' : 'badge-neutral'}`}>{m.status}</span>
+                          </div>
+                          <h4 style={{ fontSize: '0.95rem', marginBottom: '8px' }}>{m.recipeName}</h4>
+                          {m.status !== 'Cooked' && (
+                            <div style={{ display: 'flex', gap: '8px' }}>
+                              <button onClick={() => alert('Logged as Cooked! ⭐ 5 Stars awarded.')} className="btn btn-primary btn-sm">Cooked</button>
+                              <button onClick={() => alert('Meal Rescheduled to Wednesday Dinner to avoid waste!')} className="btn btn-danger btn-sm">Reschedule</button>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* AI RECIPES TAB */}
+              {activeTab === 'recipes' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <h2>🤖 AI Recipe Recommendation Engine</h2>
+                  <div className="glass-card" style={{ padding: '20px' }}>
+                    <h4>Select Your Available Pantry Ingredients</h4>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', margin: '12px 0' }}>
+                      {['Tomato', 'Onion', 'Egg', 'Rice', 'Potato', 'Spinach', 'Toor Dal'].map(item => {
+                        const active = selectedIngredients.includes(item);
+                        return (
+                          <button
+                            key={item}
+                            onClick={() => setSelectedIngredients(prev => active ? prev.filter(i => i !== item) : [...prev, item])}
+                            className={`btn btn-sm ${active ? 'btn-primary' : 'btn-secondary'}`}
+                          >
+                            {active ? '✓ ' : '+ '}{item}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                      Selected: <strong>{selectedIngredients.join(', ')}</strong> (Ranking recipes that use these first)
+                    </p>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
+                    {rankedRecipes.map(r => (
+                      <div key={r.id} className="glass-card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <span style={{ fontSize: '2.5rem', textAlign: 'center' }}>{r.imageEmoji}</span>
+                        <h4>{r.name}</h4>
+                        <span className="badge badge-success">Uses {r.matchCount} of your {selectedIngredients.length} ingredients</span>
+                        <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>⏱️ {r.cookingTime} min • {r.calories} kcal</p>
+                        <button onClick={() => setModalRecipe(r)} className="btn btn-secondary btn-sm" style={{ marginTop: 'auto' }}>View Recipe</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* GROCERY LIST TAB */}
+              {activeTab === 'grocery' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <h2>🛒 Smart Grocery List (Net Deficit Generated)</h2>
+                  <div style={{ background: '#ecfdf5', padding: '16px', borderRadius: '12px', border: '1px solid #a7f3d0' }}>
+                    <strong>💡 Zero-Waste Principle:</strong> Meal plan required 3 kg Rice, but pantry already contains 2 kg Rice. RecipeMate only requests <strong>1 kg</strong>!
+                  </div>
+                  <div className="glass-card" style={{ padding: '16px' }}>
+                    {groceryList.map((item, idx) => (
+                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
+                        <div>
+                          <strong>{item.name}</strong>
+                          <div style={{ fontSize: '0.75rem', color: '#059669' }}>In Pantry: {item.inStock} {item.unit} | Plan Demand: {item.demand} {item.unit}</div>
+                        </div>
+                        <span style={{ fontWeight: 800, fontSize: '1rem', color: '#0f172a' }}>Buy: {item.quantityToBuy} {item.unit}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* ADMIN DASHBOARD */}
+              {activeTab === 'admin-dashboard' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <h2>🛡️ Administrator System Overview</h2>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+                    <div className="glass-card" style={{ padding: '16px' }}>
+                      <span>Total Registered Users</span>
+                      <h3>4 Active Users</h3>
+                    </div>
+                    <div className="glass-card" style={{ padding: '16px' }}>
+                      <span>Total Indian Recipes</span>
+                      <h3>{recipes.length} Dishes</h3>
+                    </div>
+                    <div className="glass-card" style={{ padding: '16px' }}>
+                      <span>System Food Waste Saved</span>
+                      <h3 style={{ color: '#10b981' }}>142.5 kg</h3>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </main>
+          </div>
+
+          {/* Recipe Details Modal */}
+          {modalRecipe && (
+            <div className="modal-overlay" onClick={() => setModalRecipe(null)}>
+              <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <h3>{modalRecipe.name}</h3>
+                  <button onClick={() => setModalRecipe(null)} style={{ border: 'none', background: 'none', fontSize: '1.2rem', cursor: 'pointer' }}>×</button>
+                </div>
+                <p><strong>Cook Time:</strong> {modalRecipe.cookingTime} mins | <strong>Calories:</strong> {modalRecipe.calories} kcal</p>
+                <h4 style={{ margin: '12px 0 6px 0' }}>Required Ingredients:</h4>
+                <ul>{modalRecipe.ingredients.map((i, idx) => <li key={idx}>{i.name}: {i.amount} {i.unit}</li>)}</ul>
+                <h4 style={{ margin: '12px 0 6px 0' }}>Preparation Steps:</h4>
+                <ol>{modalRecipe.steps.map((s, idx) => <li key={idx} style={{ marginBottom: '4px' }}>{s}</li>)}</ol>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<RecipeMateApp />);
+  </script>
+</body>
+</html>

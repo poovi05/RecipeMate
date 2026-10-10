@@ -1,0 +1,561 @@
+export const INITIAL_RECIPES = [
+  {
+    id: 'rec-1',
+    name: 'Egg Tomato Curry',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 20,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 280,
+    protein: '14g',
+    goalTags: ['Quick & Easy', 'Fitness', 'Family Meals', 'Regular Home Food'],
+    dietType: 'Non-Vegetarian',
+    imageEmoji: '🍳',
+    rating: 4.8,
+    reviewsCount: 34,
+    ingredients: [
+      { name: 'Egg', amount: 3, unit: 'pcs' },
+      { name: 'Tomato', amount: 2, unit: 'pcs' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Green Chilli', amount: 2, unit: 'pcs' },
+      { name: 'Ginger Garlic Paste', amount: 1, unit: 'tsp' },
+      { name: 'Turmeric Powder', amount: 0.5, unit: 'tsp' },
+      { name: 'Cooking Oil', amount: 2, unit: 'tbsp' }
+    ],
+    steps: [
+      'Boil eggs for 9 minutes, peel shells, and make light slits.',
+      'Heat oil in a pan, sauté chopped onions and green chillies until golden.',
+      'Add ginger garlic paste, chopped tomatoes, turmeric, and cook until oil separates.',
+      'Add 1/2 cup water, gently slide in boiled eggs, and simmer for 5 minutes.',
+      'Garnish with fresh coriander and serve hot with rotis or steamed rice.'
+    ]
+  },
+  {
+    id: 'rec-2',
+    name: 'Classic Sambar with Steamed Rice',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 30,
+    difficulty: 'Medium',
+    servings: 4,
+    calories: 340,
+    protein: '11g',
+    goalTags: ['Family Meals', 'Healthy Eating', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🍲',
+    rating: 4.9,
+    reviewsCount: 88,
+    ingredients: [
+      { name: 'Toor Dal', amount: 150, unit: 'g' },
+      { name: 'Rice', amount: 300, unit: 'g' },
+      { name: 'Tomato', amount: 2, unit: 'pcs' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Carrot', amount: 1, unit: 'pcs' },
+      { name: 'Sambar Powder', amount: 2, unit: 'tbsp' },
+      { name: 'Tamarind', amount: 20, unit: 'g' },
+      { name: 'Mustard Seeds', amount: 1, unit: 'tsp' }
+    ],
+    steps: [
+      'Pressure cook toor dal with a pinch of turmeric until soft and mashable.',
+      'Cook vegetables (onion, tomato, carrot) in tamarind water with sambar powder and salt.',
+      'Add mashed dal into the simmering vegetable mixture and boil for 5 minutes.',
+      'Temper mustard seeds, curry leaves, and asafetida in hot ghee/oil and pour into sambar.',
+      'Serve steaming hot alongside fresh fragrant white rice.'
+    ]
+  },
+  {
+    id: 'rec-3',
+    name: 'Crispy Dosa with Coconut Chutney',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 15,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 260,
+    protein: '7g',
+    goalTags: ['Quick & Easy', 'Family Meals', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🥞',
+    rating: 4.9,
+    reviewsCount: 112,
+    ingredients: [
+      { name: 'Dosa Batter', amount: 400, unit: 'ml' },
+      { name: 'Coconut', amount: 50, unit: 'g' },
+      { name: 'Green Chilli', amount: 2, unit: 'pcs' },
+      { name: 'Roasted Gram Dal', amount: 2, unit: 'tbsp' },
+      { name: 'Cooking Oil', amount: 2, unit: 'tsp' }
+    ],
+    steps: [
+      'Grind fresh grated coconut, green chillies, roasted gram dal, and salt into smooth chutney.',
+      'Heat a flat cast iron skillet (tawa) on medium-high heat and grease lightly.',
+      'Pour a ladle of fermented dosa batter in the center and swirl into a thin circular crepe.',
+      'Drizzle a few drops of oil/ghee along the borders and cook until golden crisp.',
+      'Fold and serve immediately with coconut chutney and hot sambar.'
+    ]
+  },
+  {
+    id: 'rec-4',
+    name: 'Soft Idli with Tomato Rasam',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 20,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 220,
+    protein: '8g',
+    goalTags: ['Senior-Friendly', 'Healthy Eating', 'Weight Management'],
+    dietType: 'Vegetarian',
+    imageEmoji: '⚪',
+    rating: 4.7,
+    reviewsCount: 45,
+    ingredients: [
+      { name: 'Idli Batter', amount: 400, unit: 'ml' },
+      { name: 'Tomato', amount: 3, unit: 'pcs' },
+      { name: 'Garlic', amount: 4, unit: 'cloves' },
+      { name: 'Black Pepper', amount: 1, unit: 'tsp' },
+      { name: 'Cumin Seeds', amount: 1, unit: 'tsp' }
+    ],
+    steps: [
+      'Grease idli plates with sesame oil, pour batter, and steam for 10-12 minutes.',
+      'Crush garlic, black pepper, and cumin in a mortar.',
+      'Boil chopped tomatoes with tamarind juice, crushed pepper-cumin, and turmeric.',
+      'Simmer until frothy and temper with mustard seeds and curry leaves.',
+      'Serve warm spongy idlis immersed in soothing hot tomato rasam.'
+    ]
+  },
+  {
+    id: 'rec-5',
+    name: 'Zesty Lemon Rice with Peanuts',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 15,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 310,
+    protein: '6g',
+    goalTags: ['Quick & Easy', 'Family Meals', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🍋',
+    rating: 4.6,
+    reviewsCount: 29,
+    ingredients: [
+      { name: 'Rice', amount: 200, unit: 'g' },
+      { name: 'Lemon', amount: 1, unit: 'pcs' },
+      { name: 'Peanuts', amount: 30, unit: 'g' },
+      { name: 'Green Chilli', amount: 2, unit: 'pcs' },
+      { name: 'Turmeric Powder', amount: 0.5, unit: 'tsp' },
+      { name: 'Mustard Seeds', amount: 1, unit: 'tsp' }
+    ],
+    steps: [
+      'Cook rice so the grains remain separate, and let it cool completely on a wide tray.',
+      'Heat oil in a pan, fry mustard seeds, curry leaves, split urad dal, and crunchy peanuts.',
+      'Add green chillies and turmeric powder; turn off the stove.',
+      'Squeeze fresh lemon juice into the warm oil tempering with salt.',
+      'Gently fold the fragrant lemon mixture into cooled rice and rest for 10 minutes.'
+    ]
+  },
+  {
+    id: 'rec-6',
+    name: 'Vegetable Upma',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 15,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 240,
+    protein: '6g',
+    goalTags: ['Quick & Easy', 'Senior-Friendly', 'Healthy Eating'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🥣',
+    rating: 4.5,
+    reviewsCount: 38,
+    ingredients: [
+      { name: 'Semolina (Rava)', amount: 150, unit: 'g' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Carrot', amount: 1, unit: 'pcs' },
+      { name: 'Green Peas', amount: 50, unit: 'g' },
+      { name: 'Mustard Seeds', amount: 1, unit: 'tsp' },
+      { name: 'Ginger', amount: 1, unit: 'inch' }
+    ],
+    steps: [
+      'Dry roast semolina on low flame for 4 minutes until warm and fragrant.',
+      'Sauté mustard seeds, minced ginger, green chillies, diced onions, and vegetables in oil.',
+      'Add 2.5 cups of water with salt and bring to a rolling boil.',
+      'Slowly stream in roasted rava while stirring continuously to prevent any lumps.',
+      'Cover with a lid, cook on low heat for 3 minutes, and stir in 1 tsp ghee.'
+    ]
+  },
+  {
+    id: 'rec-7',
+    name: 'Comforting Curd Rice with Pomegranate',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 10,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 210,
+    protein: '7g',
+    goalTags: ['Senior-Friendly', 'Quick & Easy', 'Weight Management'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🍚',
+    rating: 4.7,
+    reviewsCount: 52,
+    ingredients: [
+      { name: 'Rice', amount: 200, unit: 'g' },
+      { name: 'Curd (Yogurt)', amount: 200, unit: 'ml' },
+      { name: 'Milk', amount: 50, unit: 'ml' },
+      { name: 'Green Chilli', amount: 1, unit: 'pcs' },
+      { name: 'Ginger', amount: 0.5, unit: 'inch' },
+      { name: 'Mustard Seeds', amount: 1, unit: 'tsp' }
+    ],
+    steps: [
+      'Cook rice slightly soft and mash gently with a spoon while still warm.',
+      'Mix in fresh yogurt, a splash of milk, and salt to create a creamy consistency.',
+      'Heat 1 tsp oil; fry mustard seeds, curry leaves, minced ginger, and green chilli.',
+      'Pour tempering over the curd rice and mix gently.',
+      'Top with fresh coriander or pomegranate pearls and chill before serving.'
+    ]
+  },
+  {
+    id: 'rec-8',
+    name: 'Dal Tadka with Soft Phulkas (Roti)',
+    category: 'North Indian',
+    regionalCategory: 'North Indian',
+    cookingTime: 25,
+    difficulty: 'Easy',
+    servings: 3,
+    calories: 320,
+    protein: '13g',
+    goalTags: ['Healthy Eating', 'Family Meals', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🫓',
+    rating: 4.9,
+    reviewsCount: 94,
+    ingredients: [
+      { name: 'Toor Dal', amount: 150, unit: 'g' },
+      { name: 'Wheat Flour', amount: 200, unit: 'g' },
+      { name: 'Tomato', amount: 2, unit: 'pcs' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Garlic', amount: 5, unit: 'cloves' },
+      { name: 'Cumin Seeds', amount: 1, unit: 'tsp' },
+      { name: 'Ghee', amount: 1, unit: 'tbsp' }
+    ],
+    steps: [
+      'Pressure cook toor dal with turmeric and salt until tender.',
+      'Knead wheat flour with warm water into a soft dough and roll out round phulkas.',
+      'Heat ghee, splutter cumin seeds, chopped garlic, onions, and ripe tomatoes with chili powder.',
+      'Pour the aromatic tadka into the cooked dal and simmer for 2 minutes.',
+      'Puff the phulkas directly on an open flame and serve hot with steaming dal.'
+    ]
+  },
+  {
+    id: 'rec-9',
+    name: 'Homestyle Rajma Masala & Jeera Rice',
+    category: 'North Indian',
+    regionalCategory: 'North Indian',
+    cookingTime: 35,
+    difficulty: 'Medium',
+    servings: 4,
+    calories: 410,
+    protein: '16g',
+    goalTags: ['Fitness', 'Family Meals', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🍛',
+    rating: 4.9,
+    reviewsCount: 140,
+    ingredients: [
+      { name: 'Kidney Beans (Rajma)', amount: 200, unit: 'g' },
+      { name: 'Rice', amount: 250, unit: 'g' },
+      { name: 'Onion', amount: 2, unit: 'pcs' },
+      { name: 'Tomato', amount: 3, unit: 'pcs' },
+      { name: 'Ginger Garlic Paste', amount: 1, unit: 'tbsp' },
+      { name: 'Garam Masala', amount: 1, unit: 'tsp' },
+      { name: 'Cumin Seeds', amount: 1, unit: 'tsp' }
+    ],
+    steps: [
+      'Soak rajma overnight and pressure cook with whole spices until melt-in-mouth soft.',
+      'Purée onions and tomatoes. Sauté in oil with ginger-garlic paste and powdered spices.',
+      'Add boiled rajma with its stock and simmer on low flame for 20 minutes for a thick gravy.',
+      'Cook basmati rice with cumin seeds (jeera) and a touch of ghee.',
+      'Serve warm Rajma gravy ladled over aromatic Jeera rice.'
+    ]
+  },
+  {
+    id: 'rec-10',
+    name: 'Amritsari Chole Masala',
+    category: 'North Indian',
+    regionalCategory: 'North Indian',
+    cookingTime: 30,
+    difficulty: 'Medium',
+    servings: 3,
+    calories: 380,
+    protein: '15g',
+    goalTags: ['Fitness', 'Family Meals'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🧆',
+    rating: 4.8,
+    reviewsCount: 76,
+    ingredients: [
+      { name: 'Chickpeas (Chole)', amount: 200, unit: 'g' },
+      { name: 'Onion', amount: 2, unit: 'pcs' },
+      { name: 'Tomato', amount: 2, unit: 'pcs' },
+      { name: 'Chole Masala Powder', amount: 2, unit: 'tbsp' },
+      { name: 'Garlic', amount: 4, unit: 'cloves' }
+    ],
+    steps: [
+      'Boil soaked chickpeas with a tea bag and salt until soft and dark.',
+      'Sauté fine chopped onions, ginger, garlic, and tomato puree until thick.',
+      'Stir in chole masala powder, kasuri methi, and boiled chickpeas.',
+      'Lightly mash a spoonful of chickpeas against the pan side to thicken gravy.',
+      'Garnish with julienned ginger and chopped cilantro.'
+    ]
+  },
+  {
+    id: 'rec-11',
+    name: 'Palak Paneer (Spinach & Cottage Cheese)',
+    category: 'North Indian',
+    regionalCategory: 'North Indian',
+    cookingTime: 25,
+    difficulty: 'Medium',
+    servings: 3,
+    calories: 320,
+    protein: '18g',
+    goalTags: ['Fitness', 'Healthy Eating', 'Weight Management'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🥬',
+    rating: 4.9,
+    reviewsCount: 89,
+    ingredients: [
+      { name: 'Spinach', amount: 250, unit: 'g' },
+      { name: 'Paneer', amount: 200, unit: 'g' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Tomato', amount: 1, unit: 'pcs' },
+      { name: 'Garlic', amount: 4, unit: 'cloves' },
+      { name: 'Green Chilli', amount: 2, unit: 'pcs' }
+    ],
+    steps: [
+      'Blanch spinach leaves in salted boiling water for 2 minutes, then plunge in cold water.',
+      'Blend blanched spinach with green chillies into a smooth vibrant green puree.',
+      'Sauté garlic, onion, and tomato in a pan with cumin and garam masala.',
+      'Add spinach purée and simmer on low heat for 5 minutes.',
+      'Add fresh paneer cubes and warm through gently without overcooking.'
+    ]
+  },
+  {
+    id: 'rec-12',
+    name: '10-Minute Spicy Egg Bhurji',
+    category: 'Quick & Easy',
+    regionalCategory: 'Pan-Indian',
+    cookingTime: 10,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 210,
+    protein: '13g',
+    goalTags: ['Quick & Easy', 'Fitness', 'Regular Home Food'],
+    dietType: 'Non-Vegetarian',
+    imageEmoji: '🍳',
+    rating: 4.8,
+    reviewsCount: 67,
+    ingredients: [
+      { name: 'Egg', amount: 3, unit: 'pcs' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Tomato', amount: 1, unit: 'pcs' },
+      { name: 'Green Chilli', amount: 2, unit: 'pcs' },
+      { name: 'Turmeric Powder', amount: 0.25, unit: 'tsp' }
+    ],
+    steps: [
+      'Crack 3 eggs in a bowl and whisk lightly with a pinch of salt.',
+      'Heat oil/butter in a pan, fry green chillies and finely diced onions until translucent.',
+      'Toss in diced tomato, turmeric, and chili powder; sauté for 1 minute.',
+      'Pour in whisked eggs and scramble gently on medium heat until soft and fluffy.',
+      'Garnish with chopped cilantro and enjoy with toast or pav.'
+    ]
+  },
+  {
+    id: 'rec-13',
+    name: 'Nutritious Moong Dal Khichdi',
+    category: 'Healthy',
+    regionalCategory: 'Pan-Indian',
+    cookingTime: 20,
+    difficulty: 'Easy',
+    servings: 3,
+    calories: 270,
+    protein: '10g',
+    goalTags: ['Senior-Friendly', 'Healthy Eating', 'Weight Management'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🍲',
+    rating: 4.8,
+    reviewsCount: 51,
+    ingredients: [
+      { name: 'Yellow Moong Dal', amount: 100, unit: 'g' },
+      { name: 'Rice', amount: 150, unit: 'g' },
+      { name: 'Ghee', amount: 1, unit: 'tbsp' },
+      { name: 'Cumin Seeds', amount: 1, unit: 'tsp' },
+      { name: 'Turmeric Powder', amount: 0.5, unit: 'tsp' },
+      { name: 'Ginger', amount: 1, unit: 'inch' }
+    ],
+    steps: [
+      'Wash moong dal and rice together thoroughly.',
+      'In a pressure cooker, melt ghee and splutter cumin seeds, hing, and grated ginger.',
+      'Add drained dal-rice, turmeric, salt, and 4.5 cups of water.',
+      'Pressure cook for 4 whistles on medium heat for a comforting soft texture.',
+      'Serve warm with a dollop of pure desi ghee and roasted papad.'
+    ]
+  },
+  {
+    id: 'rec-14',
+    name: 'Aromatic Vegetable Pulao',
+    category: 'North Indian',
+    regionalCategory: 'North Indian',
+    cookingTime: 25,
+    difficulty: 'Easy',
+    servings: 3,
+    calories: 310,
+    protein: '7g',
+    goalTags: ['Family Meals', 'Regular Home Food', 'Healthy Eating'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🍚',
+    rating: 4.7,
+    reviewsCount: 63,
+    ingredients: [
+      { name: 'Basmati Rice', amount: 200, unit: 'g' },
+      { name: 'Carrot', amount: 1, unit: 'pcs' },
+      { name: 'Potato', amount: 1, unit: 'pcs' },
+      { name: 'Green Peas', amount: 50, unit: 'g' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Bay Leaf & Cardamom', amount: 1, unit: 'pinch' }
+    ],
+    steps: [
+      'Rinse basmati rice and soak for 15 minutes in water.',
+      'Sauté whole bay leaf, cinnamon, and sliced onions in ghee until caramelized.',
+      'Add diced carrots, potatoes, green peas, and ginger-garlic paste.',
+      'Add rice, salt, and 1.8 cups water. Bring to boil and cover tightly on lowest flame.',
+      'Cook for 12 minutes, fluff with a fork, and serve with cucumber raita.'
+    ]
+  },
+  {
+    id: 'rec-15',
+    name: 'Homestyle Aloo Gobi Matar',
+    category: 'North Indian',
+    regionalCategory: 'North Indian',
+    cookingTime: 20,
+    difficulty: 'Easy',
+    servings: 3,
+    calories: 220,
+    protein: '5g',
+    goalTags: ['Family Meals', 'Quick & Easy', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🥔',
+    rating: 4.6,
+    reviewsCount: 42,
+    ingredients: [
+      { name: 'Potato', amount: 2, unit: 'pcs' },
+      { name: 'Cauliflower', amount: 200, unit: 'g' },
+      { name: 'Tomato', amount: 1, unit: 'pcs' },
+      { name: 'Green Peas', amount: 50, unit: 'g' },
+      { name: 'Turmeric Powder', amount: 0.5, unit: 'tsp' },
+      { name: 'Cumin Seeds', amount: 1, unit: 'tsp' }
+    ],
+    steps: [
+      'Cut cauliflower florets and potatoes into bite-sized cubes.',
+      'Heat mustard or cooking oil, crackle cumin seeds, and add potato and cauliflower.',
+      'Stir-fry on high flame for 3 minutes, then add turmeric, coriander powder, and salt.',
+      'Add chopped tomato and green peas, cover with lid, and steam on low for 10 minutes.',
+      'Sprinkle roasted garam masala and fresh coriander before serving.'
+    ]
+  },
+  {
+    id: 'rec-16',
+    name: 'High-Protein Sprouted Moong Salad',
+    category: 'Fitness',
+    regionalCategory: 'Pan-Indian',
+    cookingTime: 10,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 180,
+    protein: '14g',
+    goalTags: ['Fitness', 'Weight Management', 'Healthy Eating'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🥗',
+    rating: 4.9,
+    reviewsCount: 58,
+    ingredients: [
+      { name: 'Sprouted Moong', amount: 200, unit: 'g' },
+      { name: 'Tomato', amount: 1, unit: 'pcs' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Cucumber', amount: 1, unit: 'pcs' },
+      { name: 'Lemon', amount: 1, unit: 'pcs' },
+      { name: 'Chaat Masala', amount: 1, unit: 'tsp' }
+    ],
+    steps: [
+      'Steam sprouted moong for 3 minutes or use fresh raw sprouts for maximum crunch.',
+      'In a wide bowl, combine diced cucumber, crunchy onions, and juicy tomatoes.',
+      'Add the sprouts, chaat masala, black salt, and roasted cumin powder.',
+      'Drizzle fresh lemon juice and toss thoroughly.',
+      'Enjoy as a post-workout recovery meal or crisp midday snack.'
+    ]
+  },
+  {
+    id: 'rec-17',
+    name: 'Ven Pongal with Coconut Chutney',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 20,
+    difficulty: 'Easy',
+    servings: 3,
+    calories: 310,
+    protein: '8g',
+    goalTags: ['Senior-Friendly', 'Family Meals', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🥣',
+    rating: 4.9,
+    reviewsCount: 71,
+    ingredients: [
+      { name: 'Rice', amount: 150, unit: 'g' },
+      { name: 'Yellow Moong Dal', amount: 75, unit: 'g' },
+      { name: 'Black Pepper', amount: 1, unit: 'tsp' },
+      { name: 'Cumin Seeds', amount: 1, unit: 'tsp' },
+      { name: 'Ginger', amount: 1, unit: 'inch' },
+      { name: 'Ghee', amount: 2, unit: 'tbsp' },
+      { name: 'Cashews', amount: 10, unit: 'pcs' }
+    ],
+    steps: [
+      'Lightly dry roast moong dal until warm; wash together with raw rice.',
+      'Pressure cook with 4.5 cups water and salt for 4 whistles until soft and gooey.',
+      'Heat ghee; fry cashews, cracked black pepper, cumin seeds, minced ginger, and curry leaves.',
+      'Pour the fragrant sizzling ghee tempering over the cooked pongal.',
+      'Mix well and serve piping hot with coconut chutney and sambar.'
+    ]
+  },
+  {
+    id: 'rec-18',
+    name: 'Tomato Rice (Thakkali Sadam)',
+    category: 'South Indian',
+    regionalCategory: 'South Indian',
+    cookingTime: 18,
+    difficulty: 'Easy',
+    servings: 2,
+    calories: 280,
+    protein: '5g',
+    goalTags: ['Quick & Easy', 'Regular Home Food'],
+    dietType: 'Vegetarian',
+    imageEmoji: '🍅',
+    rating: 4.6,
+    reviewsCount: 39,
+    ingredients: [
+      { name: 'Rice', amount: 200, unit: 'g' },
+      { name: 'Tomato', amount: 3, unit: 'pcs' },
+      { name: 'Onion', amount: 1, unit: 'pcs' },
+      { name: 'Garlic', amount: 3, unit: 'cloves' },
+      { name: 'Fennel Seeds', amount: 0.5, unit: 'tsp' }
+    ],
+    steps: [
+      'Finely chop tomatoes or puree 2 of them for richer gravy.',
+      'Heat oil; splutter fennel seeds, cinnamon stick, chopped garlic, and onions.',
+      'Add tomatoes, turmeric, chilli powder, and salt. Sauté until oil glistens on edges.',
+      'Mix in precooked cooled rice gently without breaking grains.',
+      'Cover on low flame for 2 minutes to let flavors infuse, then serve with potato chips.'
+    ]
+  }
+];
